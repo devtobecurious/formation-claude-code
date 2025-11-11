@@ -48,5 +48,3 @@ amélioration de la commande @.claude/commands\optimize.md avec
 12. 
 
 prompt : cree un second fichier qui va présenter une jeu ou un ver de terre va exterminer tout ce qu'il trouve
-
-puis n
