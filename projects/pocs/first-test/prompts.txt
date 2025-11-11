@@ -46,5 +46,40 @@ amélioration de la commande @.claude/commands\optimize.md avec
 - https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/claude-4-best-practices
 
 12. 
-
 prompt : cree un second fichier qui va présenter une jeu ou un ver de terre va exterminer tout ce qu'il trouve
+
+
+13. 
+préparation d'un workflow
+
+# a chaque fois que tu vas créer une issue: tu vas utiliser gh
+# a chaque fois que tu vas créer une pr: tu vas utiliser gh
+
+prompt : 
+modifie le fichier @claude.md pour prendre en compte le workflow suivant :
+- pour chaque nouvelle feature, tu vas demander le nom
+- tu vas créer une branche avec ce nom, en anglais
+- tu vas demander la description complete, tu ne vas pas la générer toi-même
+- tu vas proposer 3 tests d'acceptation
+- tu vas attendre ma validation
+- tu vas créer la issue sur github 
+
+14.
+> ajoute la feature suivante : \
+le ver va rencontrer de maniere aléatoire des hérissons qui vont vouloir le manger. on doit tirer      
+sur le hérisson deux fois avant qu'il ne meurt. le hérisson cherche toujours à venir vers nous. il     
+va vouloir nous manger : on perd alors un segment. du sang coule de cette perte de segment. plus on    
+ perd de segment plus il y a du sang. au bout de 4 segments perdus, on a perdu, et on recommence au    
+ début. pour gagner un nouveau segment, on va devoir passer sur une feuille (on la mange)
+
+15. 
+inscription à vercel pour la doc à jour
+https://context7.com/dashboard
+
+Install mcp
+https://github.com/upstash/context7
+
+claude mcp add --transport http context7 https://mcp.context7.com/mcp --header "CONTEXT7_API_KEY: YOUR_API_KEY"
+
+16.
+utilise context7 pour ajouter un nouveau composant angular 

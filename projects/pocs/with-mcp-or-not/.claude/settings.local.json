@@ -1,3 +1,12 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(gh issue create:*)",
+      "Bash(gh auth:*)",
+      "Bash(cat:*)",
+      "Bash(npm run dev:*)",
+      "mcp__ide__getDiagnostics"
+    ]
+  },
   "outputStyle": "default"
 }
