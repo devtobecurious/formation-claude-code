@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Destructeur - Exterminez Tout sur Votre Passage</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2d1b00 0%, #1a0f00 50%, #4a0e0e 100%);
+            color: #fff;
+            overflow-x: hidden;
+            padding-top: 80px;
+        }
+
+        /* Navigation Bar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #8b4513, #a0522d, #ff4500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: #ff4500;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 30px;
+            height: 3px;
+            background: #ff4500;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #8b4513, #ff4500, #dc143c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 4px 20px rgba(255, 69, 0, 0.5);
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            color: #a0522d;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+            text-shadow: 0 0 20px rgba(255, 69, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 20px 50px;
+            background: linear-gradient(45deg, #8b4513, #ff4500);
+            color: white;
+            text-decoration: none;
+            font-size: 1.3em;
+            font-weight: bold;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(255, 69, 0, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 69, 0, 0.8);
+        }
+
+        .worm-showcase {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 60px 0;
+            position: relative;
+            height: 300px;
+        }
+
+        .worm {
+            position: relative;
+            animation: wormMove 4s ease-in-out infinite;
+        }
+
+        .worm-segment {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(145deg, #8b4513, #a0522d);
+            border-radius: 50%;
+            position: absolute;
+            border: 3px solid #654321;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), inset 0 -5px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .worm-head {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(145deg, #a0522d, #ff4500);
+            border-radius: 50%;
+            position: relative;
+            border: 4px solid #8b4513;
+            z-index: 10;
+            animation: headShake 2s ease-in-out infinite;
+            box-shadow: 0 10px 30px rgba(255, 69, 0, 0.4);
+        }
+
+        .worm-eye {
+            width: 15px;
+            height: 15px;
+            background: #dc143c;
+            border-radius: 50%;
+            position: absolute;
+            top: 25px;
+            animation: eyeGlow 1.5s infinite;
+            box-shadow: 0 0 10px #dc143c;
+        }
+
+        .worm-eye.left {
+            left: 20px;
+        }
+
+        .worm-eye.right {
+            right: 20px;
+        }
+
+        .worm-mouth {
+            width: 30px;
+            height: 15px;
+            border-bottom: 4px solid #000;
+            border-radius: 0 0 15px 15px;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: mouthOpen 1s infinite;
+        }
+
+        .worm-segment:nth-child(2) {
+            left: -55px;
+            top: 10px;
+            animation: segmentWiggle 2s ease-in-out infinite 0.1s;
+        }
+
+        .worm-segment:nth-child(3) {
+            left: -100px;
+            top: 25px;
+            animation: segmentWiggle 2s ease-in-out infinite 0.2s;
+        }
+
+        .worm-segment:nth-child(4) {
+            left: -140px;
+            top: 45px;
+            animation: segmentWiggle 2s ease-in-out infinite 0.3s;
+        }
+
+        .destruction-particles {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .particle {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            animation: particleExplode 3s ease-in-out infinite;
+            cursor: pointer;
+        }
+
+        .particle:nth-child(1) {
+            background: linear-gradient(135deg, #ff4500, #dc143c);
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            background: linear-gradient(135deg, #8b4513, #a0522d);
+            animation-delay: 0.5s;
+        }
+
+        .particle:nth-child(3) {
+            background: linear-gradient(135deg, #228b22, #32cd32);
+            animation-delay: 1s;
+        }
+
+        .particle:nth-child(4) {
+            background: linear-gradient(135deg, #ff8c00, #ffa500);
+            animation-delay: 1.5s;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 80px 0;
+        }
+
+        .feature-card {
+            background: rgba(139, 69, 19, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid rgba(255, 69, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(255, 69, 0, 0.4);
+            border-color: rgba(255, 69, 0, 0.6);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(255, 69, 0, 0.5));
+        }
+
+        .feature-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #ff4500;
+        }
+
+        .feature-card p {
+            font-size: 1.1em;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            background: rgba(0, 0, 0, 0.4);
+            margin-top: 80px;
+            border-top: 1px solid rgba(255, 69, 0, 0.3);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes wormMove {
+            0%, 100% {
+                transform: translateX(0) rotate(0deg);
+            }
+            25% {
+                transform: translateX(20px) rotate(5deg);
+            }
+            50% {
+                transform: translateX(0) rotate(0deg);
+            }
+            75% {
+                transform: translateX(-20px) rotate(-5deg);
+            }
+        }
+
+        @keyframes headShake {
+            0%, 100% {
+                transform: rotate(-5deg);
+            }
+            50% {
+                transform: rotate(5deg);
+            }
+        }
+
+        @keyframes segmentWiggle {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-5px) scale(1.05);
+            }
+        }
+
+        @keyframes eyeGlow {
+            0%, 100% {
+                box-shadow: 0 0 10px #dc143c;
+            }
+            50% {
+                box-shadow: 0 0 20px #dc143c, 0 0 30px #ff0000;
+            }
+        }
+
+        @keyframes mouthOpen {
+            0%, 100% {
+                height: 15px;
+            }
+            50% {
+                height: 20px;
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes particleExplode {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg) scale(1);
+            }
+            50% {
+                transform: translateY(-15px) rotate(10deg) scale(1.1);
+            }
+        }
+
+        /* Mobile - Menu hamburger */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: rgba(0, 0, 0, 0.95);
+                backdrop-filter: blur(10px);
+                padding: 30px;
+                gap: 20px;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .nav-menu.active {
+                transform: translateX(0);
+            }
+
+            .hero h1 {
+                font-size: 2.5em;
+            }
+
+            .hero p {
+                font-size: 1.2em;
+            }
+
+            .logo {
+                font-size: 2em;
+            }
+
+            .worm-segment:nth-child(3),
+            .worm-segment:nth-child(4) {
+                display: none;
+            }
+        }
+
+        /* Tablette - Navigation centrée */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nav-menu {
+                gap: 20px;
+            }
+        }
+
+        /* PC - Navigation en haut à gauche */
+        @media (min-width: 1025px) {
+            .nav-container {
+                justify-content: flex-start;
+                gap: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo">VER DESTRUCTEUR</div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#fonctionnalites">Fonctionnalités</a></li>
+                <li><a href="#gameplay">Gameplay</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <div class="logo">VER DESTRUCTEUR</div>
+            <div class="tagline">Creusez, dévorez, exterminez tout sur votre passage</div>
+        </header>
+
+        <section class="hero">
+            <h1>Déchaînez la fureur souterraine</h1>
+            <p>Incarnez un ver de terre mutant et semez le chaos dans un monde<br>qui ne méritait pas votre clémence</p>
+
+            <div class="worm-showcase">
+                <div class="worm">
+                    <div class="worm-segment"></div>
+                    <div class="worm-segment"></div>
+                    <div class="worm-segment"></div>
+                    <div class="worm-head">
+                        <div class="worm-eye left"></div>
+                        <div class="worm-eye right"></div>
+                        <div class="worm-mouth"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="destruction-particles">
+                <div class="particle">💥</div>
+                <div class="particle">🌋</div>
+                <div class="particle">⚡</div>
+                <div class="particle">🔥</div>
+            </div>
+
+            <a href="#" class="cta-button">Commencer la Destruction</a>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">💀</div>
+                <h3>Extermination Totale</h3>
+                <p>Détruisez tout ce qui bouge. Plantes, animaux, constructions humaines... rien ne résiste à votre appétit vorace.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🌍</div>
+                <h3>Monde Destructible</h3>
+                <p>Creusez à travers des environnements entièrement destructibles. Chaque élément peut être dévoré et transformé en chaos.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Évolution Mortelle</h3>
+                <p>Plus vous dévorez, plus vous devenez puissant. Débloquez des capacités dévastatrices et des mutations terrifiantes.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Missions de Chaos</h3>
+                <p>Accomplissez des objectifs de destruction spectaculaires. Détruisez des villes, anéantissez des écosystèmes entiers.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔥</div>
+                <h3>Combats Épiques</h3>
+                <p>Affrontez des boss colossaux qui tenteront de vous arrêter. Prouvez que vous êtes le prédateur ultime.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🌪️</div>
+                <h3>Modes de Jeu Extrêmes</h3>
+                <p>Mode survie, mode apocalypse, défis chronométrés... la destruction n'a jamais été aussi variée et addictive.</p>
+            </div>
+        </section>
+
+        <section class="hero">
+            <h1>Prêt à tout dévorer?</h1>
+            <p>Rejoignez la révolution souterraine et montrez au monde ce qu'est la vraie destruction</p>
+            <a href="#" class="cta-button">Libérer la Bête</a>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Ver Destructeur - Tous droits réservés</p>
+        <p>Aucun écosystème n'a été épargné lors de la création de ce jeu...</p>
+    </footer>
+
+    <script>
+        // Menu hamburger toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Fermer le menu au clic sur un lien
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Animation explosive au clic sur les particules
+        document.querySelectorAll('.particle').forEach(particle => {
+            particle.addEventListener('click', function() {
+                this.style.transform = 'scale(2) rotate(720deg)';
+                this.style.opacity = '0';
+                setTimeout(() => {
+                    this.style.transform = '';
+                    this.style.opacity = '1';
+                }, 600);
+            });
+        });
+
+        // Animation du ver au survol
+        const worm = document.querySelector('.worm');
+        if (worm) {
+            worm.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.2) rotate(10deg)';
+            });
+            worm.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+            });
+        }
+
+        // Effet de tremblement au clic sur les boutons CTA
+        document.querySelectorAll('.cta-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.body.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    document.body.style.animation = '';
+                }, 500);
+            });
+        });
+
+        // Ajout d'une animation de tremblement
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+                20%, 40%, 60%, 80% { transform: translateX(10px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
