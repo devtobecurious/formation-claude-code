@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PuzzleBot - Défiez Votre Cerveau, Dominez le Jeu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            overflow-x: hidden;
+            padding-top: 80px;
+        }
+
+        /* Navigation Bar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff8c00, #ffa500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            opacity: 0.7;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 30px;
+            height: 3px;
+            background: #fff;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff8c00, #ffa500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 4px 20px rgba(255, 140, 0, 0.3);
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 20px 50px;
+            background: linear-gradient(45deg, #ff8c00, #ff6600);
+            color: white;
+            text-decoration: none;
+            font-size: 1.3em;
+            font-weight: bold;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(255, 140, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .robot-showcase {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 60px 0;
+            position: relative;
+        }
+
+        .robot {
+            width: 200px;
+            height: 250px;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .robot-head {
+            width: 120px;
+            height: 100px;
+            background: linear-gradient(145deg, #4facfe, #00f2fe);
+            border-radius: 20px;
+            margin: 0 auto 10px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .robot-eye {
+            width: 25px;
+            height: 25px;
+            background: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 30px;
+            animation: blink 3s infinite;
+        }
+
+        .robot-eye.left {
+            left: 25px;
+        }
+
+        .robot-eye.right {
+            right: 25px;
+        }
+
+        .robot-eye::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: #333;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .robot-antenna {
+            width: 4px;
+            height: 30px;
+            background: #00f2fe;
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .robot-antenna::after {
+            content: '';
+            width: 15px;
+            height: 15px;
+            background: #ff8c00;
+            border-radius: 50%;
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 20px #ff8c00;
+            animation: glow 1.5s infinite;
+        }
+
+        .robot-body {
+            width: 140px;
+            height: 100px;
+            background: linear-gradient(145deg, #667eea, #764ba2);
+            border-radius: 15px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .robot-arm {
+            width: 60px;
+            height: 15px;
+            background: linear-gradient(145deg, #4facfe, #00f2fe);
+            border-radius: 10px;
+            position: absolute;
+            top: 120px;
+        }
+
+        .robot-arm.left {
+            left: -50px;
+            transform-origin: right center;
+            animation: wave 2s ease-in-out infinite;
+        }
+
+        .robot-arm.right {
+            right: -50px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 80px 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            font-size: 1.1em;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .puzzle-pieces {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .puzzle-piece {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: puzzleFloat 3s ease-in-out infinite;
+        }
+
+        .puzzle-piece:nth-child(2) {
+            animation-delay: 0.5s;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .puzzle-piece:nth-child(3) {
+            animation-delay: 1s;
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .puzzle-piece:nth-child(4) {
+            animation-delay: 1.5s;
+            background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            background: rgba(0, 0, 0, 0.2);
+            margin-top: 80px;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes blink {
+            0%, 90%, 100% {
+                opacity: 1;
+            }
+            95% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 20px #ff8c00;
+            }
+            50% {
+                box-shadow: 0 0 30px #ff8c00, 0 0 40px #ff8c00;
+            }
+        }
+
+        @keyframes wave {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(-20deg);
+            }
+        }
+
+        @keyframes puzzleFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-15px) rotate(5deg);
+            }
+        }
+
+        /* Mobile - Menu hamburger */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: rgba(0, 0, 0, 0.95);
+                backdrop-filter: blur(10px);
+                padding: 30px;
+                gap: 20px;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .nav-menu.active {
+                transform: translateX(0);
+            }
+
+            .hero h1 {
+                font-size: 2.5em;
+            }
+
+            .hero p {
+                font-size: 1.2em;
+            }
+
+            .logo {
+                font-size: 2em;
+            }
+        }
+
+        /* Tablette - Navigation centrée */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nav-menu {
+                gap: 20px;
+            }
+        }
+
+        /* PC - Navigation en haut à gauche (déjà par défaut) */
+        @media (min-width: 1025px) {
+            .nav-container {
+                justify-content: flex-start;
+                gap: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo">PUZZLEBOT</div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#fonctionnalites">Fonctionnalités</a></li>
+                <li><a href="#gameplay">Gameplay</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <div class="logo">PUZZLEBOT</div>
+            <div class="tagline">Assemblez votre destin, énigme par énigme</div>
+        </header>
+
+        <section class="hero">
+            <h1>Guidez votre robot vers la victoire</h1>
+            <p>Résolvez des puzzles complexes pour faire avancer votre compagnon mécanique<br>dans une aventure où chaque pièce compte</p>
+
+            <div class="robot-showcase">
+                <div class="robot">
+                    <div class="robot-head">
+                        <div class="robot-antenna"></div>
+                        <div class="robot-eye left"></div>
+                        <div class="robot-eye right"></div>
+                    </div>
+                    <div class="robot-body"></div>
+                    <div class="robot-arm left"></div>
+                    <div class="robot-arm right"></div>
+                </div>
+            </div>
+
+            <div class="puzzle-pieces">
+                <div class="puzzle-piece">🧩</div>
+                <div class="puzzle-piece">🔧</div>
+                <div class="puzzle-piece">⚡</div>
+                <div class="puzzle-piece">🎯</div>
+            </div>
+
+            <a href="#" class="cta-button">Précommander Maintenant</a>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3>Énigmes Captivantes</h3>
+                <p>Plus de 100 puzzles uniques qui mettront votre logique à l'épreuve. Chaque niveau débloque de nouvelles capacités pour votre robot.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>Robot Évolutif</h3>
+                <p>Personnalisez et améliorez votre compagnon robotique avec des pièces que vous débloquez en résolvant des énigmes.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🌟</div>
+                <h3>Univers Immersif</h3>
+                <p>Explorez des mondes colorés et mystérieux remplis de secrets à découvrir et de défis à relever.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🏆</div>
+                <h3>Défis Illimités</h3>
+                <p>Mode compétitif, classements mondiaux et puzzles quotidiens pour tester vos compétences contre d'autres joueurs.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Design Unique</h3>
+                <p>Un style artistique vibrant et moderne qui rend chaque puzzle visuellement magnifique et mémorable.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Multi-Plateformes</h3>
+                <p>Jouez sur PC, console ou mobile. Votre progression est synchronisée partout où vous allez.</p>
+            </div>
+        </section>
+
+        <section class="hero">
+            <h1>Prêt à relever le défi?</h1>
+            <p>Rejoignez des milliers de joueurs dans l'aventure la plus cérébrale de l'année</p>
+            <a href="#" class="cta-button">Obtenir PuzzleBot</a>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 PuzzleBot - Tous droits réservés</p>
+        <p>L'aventure commence bientôt...</p>
+    </footer>
+
+    <script>
+        // Menu hamburger toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Fermer le menu au clic sur un lien
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Animation interactive au clic sur les pièces de puzzle
+        document.querySelectorAll('.puzzle-piece').forEach(piece => {
+            piece.addEventListener('click', function() {
+                this.style.transform = 'scale(1.2) rotate(360deg)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 500);
+            });
+        });
+
+        // Animation du robot au survol
+        const robot = document.querySelector('.robot');
+        if (robot) {
+            robot.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.1)';
+            });
+            robot.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+            });
+        }
+    </script>
+</body>
+</html>

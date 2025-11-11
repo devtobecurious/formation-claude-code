@@ -1,0 +1,30 @@
+1. landing page
+créer un fichier html qui représente une landing page pour donner envie d'acheter mon futur jeu-vidéo : un robot qui va avancer grâce à des énigmes de puzzle à assembler. Crée juste un fichier html sans aucun autre fichier.
+
+2.
+modifier le titre dans @landing-page.html pour etre plus enjoué
+
+3.
+créer un side bar en haut de la page @landing-page.html
+la side bar doit avoir un cvomportement responsive suivant : 
+- mobile, pattern hamburger 
+- tablette, centrée au milieu
+- pc, en haut a gauche
+
+4.
+/init
+
+5.
+ajoute une règle importante de style dans @CLAUDE.md  : la couleur principal est le orange 
+
+6. prend en compte et modifie le style de la page @landing-page.html 
+
+7. 
+ajoute les commandes déjà présentes le package.json dans le fichier @landing-page.html  
+
+ok et bien initialise le projet pour avoir un package.json
+
+ok et maintenant met à jour le fichier @landing-page.html  en conséquence 
+
+8. 
+lance le serveur

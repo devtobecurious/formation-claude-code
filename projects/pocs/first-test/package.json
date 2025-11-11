@@ -1,0 +1,22 @@
+{
+  "name": "puzzlebot-landing-page",
+  "version": "1.0.0",
+  "description": "Landing page for PuzzleBot - a puzzle-solving robot video game",
+  "main": "landing-page.html",
+  "scripts": {
+    "start": "npx http-server -p 8080 -o landing-page.html",
+    "dev": "npx live-server --port=8080 --open=landing-page.html",
+    "serve": "npx http-server -p 8080"
+  },
+  "keywords": [
+    "landing-page",
+    "puzzlebot",
+    "game",
+    "html",
+    "css",
+    "javascript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {}
+}
