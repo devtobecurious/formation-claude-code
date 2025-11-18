@@ -83,3 +83,12 @@ claude mcp add --transport http context7 https://mcp.context7.com/mcp --header "
 
 16.
 utilise context7 pour ajouter un nouveau composant angular 
+
+17. 
+crée un sub agent en t'inspirant de https://code.claude.com/docs/en/sub-agents
+tu vas mettre à jour pour cela le fichier @.claude/agents/explore-code.md  
+ce subagent va explorer le code présent et relever tous les points qui posent problème en lien avec la qualité de code, ou les risques de sécurité.
+il va générer un fichier md : following/tasks.md
+
+18.
+utilise le test-runner-fixer subagent pour corriger les tests qui échouent

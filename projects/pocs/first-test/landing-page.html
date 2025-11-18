@@ -340,6 +340,149 @@
             background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%);
         }
 
+        /* Section Prix */
+        .pricing-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .pricing-title {
+            font-size: 3em;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #ff8c00, #ffa500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .pricing-subtitle {
+            font-size: 1.3em;
+            opacity: 0.9;
+            margin-bottom: 50px;
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px 30px;
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            text-align: center;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .pricing-card.featured {
+            background: rgba(255, 140, 0, 0.15);
+            border: 3px solid #ff8c00;
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(45deg, #ff8c00, #ff6600);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(255, 140, 0, 0.4);
+        }
+
+        .pricing-header h3 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .price {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            margin: 20px 0 30px;
+        }
+
+        .price .currency {
+            font-size: 1.5em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+
+        .price .amount {
+            font-size: 4em;
+            font-weight: bold;
+            line-height: 1;
+            background: linear-gradient(45deg, #ff8c00, #ffa500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .price .period {
+            font-size: 1.5em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin: 30px 0;
+            padding: 0;
+        }
+
+        .pricing-features li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1.05em;
+            opacity: 0.95;
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .pricing-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .pricing-card.featured .pricing-button {
+            background: linear-gradient(45deg, #ff8c00, #ff6600);
+            box-shadow: 0 5px 20px rgba(255, 140, 0, 0.3);
+        }
+
         footer {
             text-align: center;
             padding: 40px 0;
@@ -458,6 +601,26 @@
             .logo {
                 font-size: 2em;
             }
+
+            .pricing-title {
+                font-size: 2em;
+            }
+
+            .pricing-subtitle {
+                font-size: 1.1em;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+
+            .pricing-card.featured:hover {
+                transform: translateY(-10px);
+            }
+
+            .price .amount {
+                font-size: 3em;
+            }
         }
 
         /* Tablette - Navigation centrée */
@@ -493,6 +656,7 @@
             <ul class="nav-menu">
                 <li><a href="#accueil">Accueil</a></li>
                 <li><a href="#fonctionnalites">Fonctionnalités</a></li>
+                <li><a href="#tarifs">Tarifs</a></li>
                 <li><a href="#gameplay">Gameplay</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -567,6 +731,74 @@
                 <div class="feature-icon">📱</div>
                 <h3>Multi-Plateformes</h3>
                 <p>Jouez sur PC, console ou mobile. Votre progression est synchronisée partout où vous allez.</p>
+            </div>
+        </section>
+
+        <section id="tarifs" class="pricing-section">
+            <h2 class="pricing-title">Choisissez votre aventure</h2>
+            <p class="pricing-subtitle">Des tarifs adaptés à tous les joueurs</p>
+
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Édition Standard</h3>
+                        <div class="price">
+                            <span class="currency">€</span>
+                            <span class="amount">29</span>
+                            <span class="period">.99</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ Jeu complet avec 100+ puzzles</li>
+                        <li>✓ Mode histoire immersif</li>
+                        <li>✓ Personnalisation basique du robot</li>
+                        <li>✓ Mises à jour gratuites</li>
+                        <li>✓ Support multi-plateformes</li>
+                    </ul>
+                    <a href="#" class="pricing-button">Acheter maintenant</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div class="badge">Le plus populaire</div>
+                    <div class="pricing-header">
+                        <h3>Édition Deluxe</h3>
+                        <div class="price">
+                            <span class="currency">€</span>
+                            <span class="amount">49</span>
+                            <span class="period">.99</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ Tout de l'édition Standard</li>
+                        <li>✓ 50 puzzles bonus exclusifs</li>
+                        <li>✓ Pack de skins premium pour le robot</li>
+                        <li>✓ Bande originale numérique</li>
+                        <li>✓ Accès anticipé aux DLC</li>
+                        <li>✓ Mode défi quotidien premium</li>
+                    </ul>
+                    <a href="#" class="pricing-button">Acheter maintenant</a>
+                </div>
+
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Édition Collector</h3>
+                        <div class="price">
+                            <span class="currency">€</span>
+                            <span class="amount">79</span>
+                            <span class="period">.99</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ Tout de l'édition Deluxe</li>
+                        <li>✓ Artbook digital exclusif (120 pages)</li>
+                        <li>✓ Robot physique de collection</li>
+                        <li>✓ Contenu behind-the-scenes</li>
+                        <li>✓ Badge exclusif dans le jeu</li>
+                        <li>✓ Nom dans les crédits</li>
+                        <li>✓ Pass saison gratuit</li>
+                    </ul>
+                    <a href="#" class="pricing-button">Acheter maintenant</a>
+                </div>
             </div>
         </section>
 
