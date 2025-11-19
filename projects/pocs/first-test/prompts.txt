@@ -92,3 +92,14 @@ il va générer un fichier md : following/tasks.md
 
 18.
 utilise le test-runner-fixer subagent pour corriger les tests qui échouent
+
+19.
+your goal is to improve the component generation prompt at @src\lib\prompts\generation.tsx. here's how : \\
+  1. open a browser and navigate to localhost:3000\
+  2. request a basic component to be generated\
+  3. review the generated component and its source code\
+  4. identify areas for improvement\
+  5. update the prompt to produce better components goind forwards\
+  \
+  for now, only evaluate visual styling aspects. we don't want components generated that look typical tailwindcss       
+  components  - we want something more original. 
