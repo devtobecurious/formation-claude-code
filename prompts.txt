@@ -103,3 +103,13 @@ your goal is to improve the component generation prompt at @src\lib\prompts\gene
   \
   for now, only evaluate visual styling aspects. we don't want components generated that look typical tailwindcss       
   components  - we want something more original. 
+
+20.
+List out the names of allt he tools you have access to, bullet point list
+
+21. 
+(après créatino hook)
+read the .env file
+
+22.
+try the grep tool to read it
