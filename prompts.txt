@@ -113,3 +113,10 @@ read the .env file
 
 22.
 try the grep tool to read it
+
+23. 
+in the @src/schema.ts file update createSchema to tkae a verbose option
+
+24.
+création d'un hook qui fait le taff pour détecter la compil via noEmit, et vérifier le typage à chaque modif
+
